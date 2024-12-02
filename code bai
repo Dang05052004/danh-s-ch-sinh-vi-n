@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Danhsachsinhvien
+{
+    internal class Program
+    {
+        public class Student
+        {
+            public int ID { get; set; }
+            public string Name { get; set; }
+            public int Age { get; set; }
+            public Student() { }
+            public Student(int id, string name, int age) {
+                ID = id;
+                Name = name;
+                Age = age;
+            }
+        }
+        static void Main(string[] args)
+        {
+            List<Student> a = new List<Student>
+            {
+                new Student(001, "Tran Hoang The Dang", 20),
+                new Student(002, "Le Kim Ngoc Anh", 19),
+                new Student(003, "Anh Hoang Huy", 18),
+                new Student(004, "Nguyen Gia Bao Khanh", 18),
+                new Student(005, "Vo Trong Tinh", 19),
+                new Student(006, "Lee Min Cuong", 17),
+
+            };
+            //cau 1: in danh sach sinh vien
+            Console.WriteLine("1.Danh sach hoc sinh.");
+            a.ForEach(x=>  Console.WriteLine($"Ma so:{ x.ID},Ten hoc sinh:{x.Name}, Tuoi cua hoc sinh:{x.Age}"));
+            //cau 2: in hoc sinh cos tuoi tu 15 den 18
+            var Search = a.Where(t=> t.Age >=15 && t.Age <= 18).ToList();
+            Console.WriteLine("\n2. Danh sach hoc sinh tu 15 tuoi den 18 tuoi");
+            Search.ForEach(t=> Console.WriteLine($"Ma so:{ t.ID},Ten hoc sinh: { t.Name}, Tuoi cua hoc sinh:{ t.Age}"));
+            //caau 3: in hoc sinh co ten bat dau bang chu a
+            var timten= a.Where(t=> t.Name.StartsWith("A")).ToList();
+            if (timten.Count > 0)
+            {
+                Console.WriteLine("\n 3.Hoc sinh co ten bat dau bang chu 'A'");
+                timten.ForEach(st => Console.WriteLine($"Ma so: {st.ID}, Ten hoc sinh: {st.Name}, Tuoi hoc sinh: {st.Age}"));
+            }
+            else
+            {
+                Console.WriteLine("-> Khong co hoc sinh nao co ten bat dau bang chu 'A'");
+            }
+            //cau 4: tinh tong tuoi cac hoc sinh trong danh sach
+            Console.WriteLine(" \n 4.Tong tuoi cua cac hoc sinh");
+            int Tongtuoi= a.Sum(t=> t.Age);
+            Console.WriteLine("\n 5.Tong tuoi cua cac hoc sinh la:"+Tongtuoi);
+            //cau 5: in hoc sinh co tuoi lon nhat
+            Console.WriteLine("Hoc sinh co tuoi lon nhat la:");
+            var Tuoimax=a.OrderByDescending(t=> t.Age).First();
+            Console.WriteLine($"Ma so: {Tuoimax.ID}, Ten hoc sinh: {Tuoimax.Name}, Tuoi hoc sinh: {Tuoimax.Age}");
+            //cau 6: xap sep thep tuoi tang dan
+            Console.WriteLine("\n 6.Sap xep danh sach hoc sinh theo tuoi tang dan");
+            var RankAge = a.OrderBy(st => st.Age);
+            foreach (var student in RankAge)
+            {
+                Console.WriteLine($"Ma so hoc sinh: {student.ID}, Ten hoc sinh: {student.Name}, Tuoi hoc sinh: {student.Age}");
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
